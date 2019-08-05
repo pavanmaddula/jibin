@@ -1,0 +1,175 @@
+drop table employee;
+drop table batch;
+drop table faculty;
+drop table lot;
+drop table test;
+drop table course;
+drop table score;
+
+create table faculty
+(faculty_id number(10) constraint fac_pk primary key,
+ faculty_name varchar2(30) constraint fac_nn not null,
+f_designation varchar2(10)
+);
+
+
+create table course
+(course_id number(10) constraint cou_pk primary key,
+course_name varchar2(10) constraint cou_nn not null,
+lot_id number(10),
+faculty_id number(10)
+);
+
+
+create table batch
+(batchid number(10) constraint bt_pk primary key,
+ batchname varchar2(30) constraint bt_nn not null,
+ s_date date,
+ e_date date constraint e_chk check(e_date > s_date and s_date > '2019-06-20'),
+ faculty_id varchar2(30) references faculty(faculty_id) on cascade delete
+);
+
+
+create table employees
+(empid  number(10) constraint emp_pk primary key,
+ ename varchar2(30) constraint emp_nn not null,
+ designation varchar2(30),
+ qualification varchar2(30),
+ batchid number(10) references batch(batchid) on cascade delete
+);
+
+
+
+create table lot
+(lot_id number(10) constraint lot_pk primary key,
+batchid number(10) references batch(batchid) on cascade delete,
+lot_name varchar2(10) constraint lot_nn notnull,
+lot_mentor varchar2(10));
+
+create table test
+(batchid number(10) references batch(batchid) on cascade delete,
+course_id number(10) references course(course_id) on cascade delete,
+test_id number(10) constraint test_non  NOT NULL,
+test_name varchar2(10) constraint test_nn not null,
+test_date date);
+
+
+create table score
+(test_id number(10),
+empid number(10),
+ename varchar2(10),
+dq1_marks number(10),
+dq2_marks number(10),
+dq3_marks number(10),
+dq4_marks number(10),
+mpt number(10),
+mtt number(10),
+course_id number(10));  
+
+CREATE SEQUENCE S1 START WITH 11;
+insert into course  values(S1.NEXTVAL,"PSUEDOCODE",100,102);
+insert into course  values(S1.NEXTVAL,"RDBMS",100,102);
+insert into course  values(S1.NEXTVAL,"ORACLE SQL",100,101);
+insert into course  values(S1.NEXTVAL,"PLSQL",100,101);
+insert into course  values(S1.NEXTVAL,"UNIX",100,101);
+insert into course  values(S1.NEXTVAL,"CORE JAVA8",200,105);
+insert into course  values(S1.NEXTVAL,"WEB BASICS",200,106);
+insert into course  values(S1.NEXTVAL,"ANGULAR 6 FOR JEE",200,103);
+insert into course  values(S1.NEXTVAL,"OOPS AND SQL",200,105);
+insert into course  values(S1.NEXTVAL,"PEGA",200,105);
+insert into course  values(S1.NEXTVAL,"COBOL",300,107);
+insert into course  values(S1.NEXTVAL,"VSAM",300,108);
+insert into course  values(S1.NEXTVAL,"JCL",300,107);
+insert into course  values(S1.NEXTVAL,"CICS",300,109);
+insert into course  values(S1.NEXTVAL,"DB2",300,110);
+insert into course  values(S1.NEXTVAL,"HTML5 AND CSS3",400,102);
+insert into course  values(S1.NEXTVAL,"JAVASCRIPT",400,107);
+insert into course  values(S1.NEXTVAL,"BOOTSTRAP",400,108);
+insert into course  values(S1.NEXTVAL,"JQUERY",400,109);
+insert into course  values(S1.NEXTVAL,"ANGULAR JS",400,101);
+insert into course  values(S1.NEXTVAL,"C#",500,109);
+insert into course  values(S1.NEXTVAL,"C++",500,110);
+insert into course  values(S1.NEXTVAL,"PYTHON",500,109);
+insert into course  values(S1.NEXTVAL,"SA",500,109);
+insert into course  values(S1.NEXTVAL,"R",500,110);
+
+
+CREATE SEQUENCE S2 START WITH 101;
+insert into faculty values(S2.NEXTVAL,"AJAY","TRAINER");
+insert into faculty values(S2.NEXTVAL,"PARVATHY","TRAINER");
+insert into faculty values(S2.NEXTVAL,"DEVANGANA","MENTOR");
+insert into faculty values(S2.NEXTVAL,"VIJAY","TRAINER");
+insert into faculty values(S2.NEXTVAL,"MUKUNTHAN","MENTOR");
+insert into faculty values(S2.NEXTVAL,"RAHMAN","TRAINER");
+insert into faculty values(S2.NEXTVAL,"RAKESH","MENTOR");
+insert into faculty values(S2.NEXTVAL,"THANGA NILA","TRAINER");
+insert into faculty values(S2.NEXTVAL,"VICTOR","MENTOR");
+insert into faculty values(S2.NEXTVAL,"RAM","MENTOR");
+
+
+create sequence s3 start with 1200;
+insert into employees values(S3.NEXTVAL,'AMBRUCE","ANALYST","B.E",1);
+insert into employees values(S3.NEXTVAL,'CHARLIE","ANALYST","B.TECH",1);
+insert into employees values(S3.NEXTVAL,'ANNABELA","ANALYST","B.E",1);
+insert into employees values(S3.NEXTVAL,"ANNIE","ANALYST","B.TECH",1);
+insert into employees values(S3.NEXTVAL,"ZAYN","ANALYST","B.E",1);
+insert into employees values(S3.NEXTVAL,"TAYLOR","ANALYST","B.E",2);
+insert into employees values(S3.NEXTVAL,"BIEBER","ANALYST","B.E",2);
+insert into employees values(S3.NEXTVAL,"JACKY","ANALYST","BCA",2);
+insert into employees values(S3.NEXTVAL,"JULIE","ANALYST","BCA",2);
+insert into employees values(S3.NEXTVAL,"KEVIN","ANALYST","B.TECH",2);
+insert into employees values(S3.NEXTVAL,"GWEN","ANALYST","B.E",3);
+insert into employees values(S3.NEXTVAL,"BEN","ANALYST","B.E",3);
+insert into employees values(S3.NEXTVAL,"SCOOBY","ANALYST","B.E",3);
+insert into employees values(S3.NEXTVAL,"NEO","ANALYST","BCA",3);
+insert into employees values(S3.NEXTVAL,"PUMBA","ANALYST","B.E",3);
+insert into employees values(S3.NEXTVAL,"TIMON","ANALYST","B.TECH",4);
+insert into employees values(S3.NEXTVAL,"PHERB","ANALYST","B.E",4);
+insert into employees values(S3.NEXTVAL,"SNAPE","ANALYST","B.E",4);
+insert into employees values(S3.NEXTVAL,"HERMOINE","ANALYST","B.E",4);
+insert into employees values(S3.NEXTVAL,"LINCON","ANALYST","B.E",4);
+insert into employees values(S3.NEXTVAL,"STEPHEN","ANALYST","B.TECH",5);
+insert into employees values(S3.NEXTVAL,"HULK","ANALYST","BCA",5);
+insert into employees values(S3.NEXTVAL,"STARK","ANALYST","B.TECH",5);
+insert into employees values(S3.NEXTVAL,"RON","ANALYST","B.E",5);
+insert into employees values(S3.NEXTVAL,"HARRY","ANALYST","B.TECH",5);
+
+CREATE SEQUENCE S4 START WITH 501;
+insert into lot values(S4.NEXTVAL,1,"RDBMS","DEVAGANA");
+insert into lot values(S4.NEXTVAL,2,"PEGA","MUKUNTHAN");
+insert into lot values(S4.NEXTVAL,3,"MAINFRAME","RAM");
+insert into lot values(S4.NEXTVAL,4,"JAVA FULL STACK","RAKESH");
+insert into lot values(S4.NEXTVAL,5,"V&V","VICTOR");
+
+CREATE SEQUENCE S5 START WITH 1001;
+insert into test values(1,11,S5.NEXTVAL,"M1",TO_DATE('12-JUL-2019', 'DD-MON-YYYY'));
+insert into test values(2,16,S5.NEXTVAL,"M1",TO_DATE('12-JUL-2019', 'DD-MON-YYYY'));
+insert into test values(3,21,S5.NEXTVAL,"M1",TO_DATE('12-JUL-2019', 'DD-MON-YYYY'));
+insert into test values(4,26,S5.NEXTVAL,"M1",TO_DATE('12-JUL-2019', 'DD-MON-YYYY'));
+insert into test values(5,31,S5.NEXTVAL,"M1",TO_DATE('12-JUL-2019', 'DD-MON-YYYY'));
+insert into test values(1,12,S5.NEXTVAL,"M2",TO_DATE('29-JUL-2019', 'DD-MON-YYYY'));
+insert into test values(2,17,S5.NEXTVAL,"M2",TO_DATE('29-JUL-2019', 'DD-MON-YYYY'));
+insert into test values(3,22,S5.NEXTVAL,"M2",TO_DATE('29-JUL-2019', 'DD-MON-YYYY'));
+insert into test values(4,27,S5.NEXTVAL,"M2",TO_DATE('29-JUL-2019', 'DD-MON-YYYY'));
+insert into test values(5,32,S5.NEXTVAL,"M2",TO_DATE('29-JUL-2019', 'DD-MON-YYYY'));
+insert into test values(1,13,S5.NEXTVAL,"M3",TO_DATE('14-AUG-2019', 'DD-MON-YYYY'));
+insert into test values(2,18,S5.NEXTVAL,"M3",TO_DATE('14-AUG-2019', 'DD-MON-YYYY'));
+insert into test values(3,23,S5.NEXTVAL,"M3",TO_DATE('14-AUG-2019', 'DD-MON-YYYY'));
+insert into test values(4,28,S5.NEXTVAL,"M3",TO_DATE('14-AUG-2019', 'DD-MON-YYYY'));
+insert into test values(5,33,S5.NEXTVAL,"M3",TO_DATE('14-AUG-2019', 'DD-MON-YYYY'));
+insert into test values(1,14,S5.NEXTVAL,"M4",TO_DATE('29-AUG-2019', 'DD-MON-YYYY'));
+insert into test values(2,19,S5.NEXTVAL,"M4",TO_DATE('29-AUG-2019', 'DD-MON-YYYY'));
+insert into test values(3,24,S5.NEXTVAL,"M4",TO_DATE('29-AUG-2019', 'DD-MON-YYYY'));
+insert into test values(4,29,S5.NEXTVAL,"M4",TO_DATE('29-AUG-2019', 'DD-MON-YYYY'));
+insert into test values(5,34,S5.NEXTVAL,"M4",TO_DATE('29-AUG-2019', 'DD-MON-YYYY'));
+insert into test values(1,15,S5.NEXTVAL,"M5",TO_DATE('16-SEP-2019', 'DD-MON-YYYY'));
+insert into test values(2,20,S5.NEXTVAL,"M5",TO_DATE('16-SEP-2019', 'DD-MON-YYYY'));
+insert into test values(3,25,S5.NEXTVAL,"M5",TO_DATE('16-SEP-2019', 'DD-MON-YYYY'));
+insert into test values(4,30,S5.NEXTVAL,"M5",TO_DATE('16-SEP-2019', 'DD-MON-YYYY'));
+insert into test values(5,35,S5.NEXTVAL,"M5",TO_DATE('16-SEP-2019', 'DD-MON-YYYY')); 
+
+insert into score values(1001,1200,'AMBRUCE',8,9,5,4,55,35,11)
+
+
+
+
